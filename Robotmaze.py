@@ -1,23 +1,44 @@
 import sys
 
-print('Number of arguments:', len(sys.argv), 'arguments.')
-print('Argument List:', str(sys.argv))
 filename = sys.argv[1]
 
 widthOfMaze = None
 lengthOfMaze = None
+robotPosition = None
+goalPositions = []
+obstaclePositions = []
 
 with open(filename) as f:
     for line in f:
         content = line.strip()
-        # Assuming the line contains a single pair of coordinates like "[5,11]"
         if content.startswith("[") and content.endswith("]"):
-            coordinates_str = content[1:-1]  # Remove the square brackets
-            coordinates = [int(coord) for coord in coordinates_str.split(",")]
-            if len(coordinates) == 2:
-                widthOfMaze, lengthOfMaze = coordinates
-                break  # Assuming you want the first pair and exit
-        
-# You can now use widthOfMaze and lengthOfMaze variables
-print("Width of Maze:", widthOfMaze)
-print("Length of Maze:", lengthOfMaze)
+            # Extract maze dimensions [5,11]
+            dimensions_str = content[1:-1]
+            widthOfMaze, lengthOfMaze = map(int, dimensions_str.split(","))
+
+        elif content.startswith("(") and content.endswith(")"):
+            # Extract robot position
+            if robotPosition is None:
+                robotPosition = tuple(map(int, content[1:-1].split(",")))
+            else:
+                # Extract goal position
+                goalPositions.extend(tuple(map(int, x.strip()[1:-1].split(","))) for x in content.split("|"))
+
+                # After reading a line for goal positions, now read for obstacle positions
+                for next_line in f:
+                    next_content = next_line.strip()
+                    if "," in next_content:
+                        # Strip parentheses before splitting
+                        obstaclePositions.append(tuple(map(int, next_content.strip("()").split(","))))
+                    else:
+                        # Stop reading obstacle positions if a new section starts
+                        break
+
+print("Dimensions of the Maze:", widthOfMaze, "x", lengthOfMaze)
+print("Robot's Initial Position:", robotPosition)
+print("Goal Positions:")
+for goal in goalPositions:
+    print(goal)
+print("Obstacle Positions:")
+for obstacle in obstaclePositions:
+    print(obstacle)
