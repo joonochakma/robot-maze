@@ -7,14 +7,16 @@ lengthOfMaze = None
 robotPosition = None
 goalPositions = []
 obstaclePositions = []
+maze = None
 
 with open(filename) as f:
     for line in f:
         content = line.strip()
         if content.startswith("[") and content.endswith("]"):
-            # Extract maze dimensions [5,11]
+            # Extract maze dimensions [11, 5]
             dimensions_str = content[1:-1]
-            widthOfMaze, lengthOfMaze = map(int, dimensions_str.split(","))
+            lengthOfMaze, widthOfMaze = map(int, dimensions_str.split(","))
+            maze = [[0 for _ in range(widthOfMaze)] for _ in range(lengthOfMaze)]
 
         elif content.startswith("(") and content.endswith(")"):
             # Extract robot position
@@ -29,12 +31,18 @@ with open(filename) as f:
                     next_content = next_line.strip()
                     if "," in next_content:
                         # Strip parentheses before splitting
-                        obstaclePositions.append(tuple(map(int, next_content.strip("()").split(","))))
+                        obstacle = tuple(map(int, next_content.strip("()").split(",")))
+                        obstaclePositions.append(obstacle)
+                        x, y, width, height = obstacle
+                        for i in range(y, y + height):
+                            for j in range(x, x + width):
+                                if 0 <= i < lengthOfMaze and 0 <= j < widthOfMaze:
+                                    maze[i][j] = 1
                     else:
                         # Stop reading obstacle positions if a new section starts
                         break
 
-print("Dimensions of the Maze:", widthOfMaze, "x", lengthOfMaze)
+print("Dimensions of the Maze:", lengthOfMaze, "x", widthOfMaze)
 print("Robot's Initial Position:", robotPosition)
 print("Goal Positions:")
 for goal in goalPositions:
@@ -42,3 +50,7 @@ for goal in goalPositions:
 print("Obstacle Positions:")
 for obstacle in obstaclePositions:
     print(obstacle)
+
+print("Maze Representation:")
+for row in maze:
+    print(row)
