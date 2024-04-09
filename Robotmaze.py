@@ -33,7 +33,7 @@ def read_maze(filename):
                         x, y = goal
                         maze[y][x] = "g"  # Mark goal positions as "g"
 
-                    # After reading a line for goal positions, now read for obstacle positions
+                    # now read for obstacle positions
                     for next_line in f:
                         next_content = next_line.strip()
                         if "," in next_content:
@@ -43,20 +43,16 @@ def read_maze(filename):
                             x, y, width, height = obstacle
                             for i in range(y, y + height):
                                 for j in range(x, x + width):
-                                    if 0 <= i < length and 0 <= j < width:
-                                        maze[i][j] = "1"  # Mark obstacle positions as "1"
+                                    maze[i][j] = "1"  # Mark obstacle positions as "1"
                         else:
                             # Stop reading obstacle positions if a new section starts
                             break
 
         return maze, initial_pos, goals, obstacles
-
-
 def main():
     if len(sys.argv) != 3:
         print("Usage: python robot_path.py <maze_file> <algorithm_file>")
-        sys.exit(1)
-
+        
     maze_file = sys.argv[1]
     algorithm_file = sys.argv[2]
 
@@ -64,7 +60,7 @@ def main():
 
     print("Maze Representation:")
     for row in maze:
-        print(row)
+        print(" ".join(cell for cell in row))
 
     print("\nRobot's Initial Position:", initial_pos)
     print("Goal Positions:")
@@ -87,3 +83,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

@@ -1,6 +1,10 @@
 import sys
 from collections import deque
 
+#breadth
+#breadth = broad / wide works horizontally before vertically
+# uses queue that utilise fifo
+
 def bfs(maze, start, goals):
     """
     Perform Breadth-First Search to find a path from start to any of the goals.
@@ -22,8 +26,10 @@ def bfs(maze, start, goals):
         # Check possible moves: up, down, left, right
         for dx, dy, direction in [(0, 1, 'down'), (0, -1, 'up'), (1, 0, 'right'), (-1, 0, 'left')]:
             new_x, new_y = x + dx, y + dy
-            if 0 <= new_x < len(maze[0]) and 0 <= new_y < len(maze) and maze[new_y][new_x] != "1":
+            if 0 <= new_x < len(maze[0]) and 0 <= new_y < len(maze) and maze[new_y][new_x] != "1": #checks other moves before moving 
                 queue.append(((new_x, new_y), path + [direction]))
+    
+    
 
     return None
 
@@ -51,6 +57,8 @@ def main():
     if path is not None:
         print("\nPath Found:")
         print(" -> ".join(path))
+       
+        
     else:
         print("\nNo path found from robot's initial position to any of the goals.")
 
