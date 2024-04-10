@@ -1,144 +1,67 @@
 import sys
+from collections import deque
 
-print('Number of arguments:', len(sys.argv), 'arguments.')
-print('Argument List:', str(sys.argv))
-filename = sys.argv[1]
-#method = sys.argv[2]
-print (sys.argv[1])
+#breadth
+#breadth = broad / wide works horizontally before vertically
+# uses queue that utilise fifo
 
-Maze = {}
-with open(filename) as f:
-    for line in f:
-        content = line.strip()
-        # print(content)
-        content_list = content.split(" ")
-        widthOfMaze = content_list[0]
-        widthOfMaze1= [int(i) for i in widthOfMaze.split() if i.isdigit()]
-        #lengthOfMaze= content_list[1]
-        # drivingD = content_list[2]
-        # straightD = content_list[3]
+def bfs(maze, start, goals):
+    """
+    Perform Breadth-First Search to find a path from start to any of the goals.
+    """
+    visited = set()
+    queue = deque([(start, [])])
 
+    while queue:
+        current, path = queue.popleft()
+        if current in visited:
+            continue
+
+        visited.add(current)
+
+        x, y = current
+        if current in goals:
+            return path
+
+        # Check possible moves: up, down, left, right
+        for dx, dy, direction in [(0, 1, 'down'), (0, -1, 'up'), (1, 0, 'right'), (-1, 0, 'left')]:
+            new_x, new_y = x + dx, y + dy
+            if 0 <= new_x < len(maze[0]) and 0 <= new_y < len(maze) and maze[new_y][new_x] != "1": #checks other moves before moving 
+                queue.append(((new_x, new_y), path + [direction]))
     
-        # if country_map.get(city1):
-        #     city1_list = country_map.get(city1)
-        #     city1_list.append((city2, int(drivingD), int(straightD)))
-        #     country_map.update({city1:city1_list})
-        # else:
-        #     country_map.update({city1:[(city2, int(drivingD), int(straightD))]})
-            
-        # if country_map.get(city2):
-        #     city2_list = country_map.get(city2)
-        #     city2_list.append((city1, int(drivingD), int(straightD)))
-        #     country_map.update({city2:city2_list})
-        # else:
-        #     country_map.update({city2:[(city1, int(drivingD), int(straightD))]})
-            
-print(str(widthOfMaze1) + content_list[0])      
-# print(country_map)
+    
 
+    return None
+
+
+def main():
+    if len(sys.argv) != 2:
+        print("Usage: python bfs_algorithm.py <maze_file>")
+        sys.exit(1)
+
+    maze_file = sys.argv[1]
+    with open(maze_file) as f:
+        maze = [list(line.strip()) for line in f]
+
+    robot_pos = None
+    goal_positions = []
+    for y in range(len(maze)):
+        for x in range(len(maze[y])):
+            if maze[y][x] == "R":
+                robot_pos = (x, y)
+            elif maze[y][x] == "g":
+                goal_positions.append((x, y))
+
+    path = bfs(maze, robot_pos, goal_positions)
+
+    if path is not None:
+        print("\nPath Found:")
+        print(" -> ".join(path))
+       
         
-
-print('Number of arguments:', len(sys.argv), 'arguments.')
-print('Argument List:', str(sys.argv))
- 
-# widthOfMaze = None
-# lengthOfMaze = None
-# robot_x = None
-# robot_y = None
+    else:
+        print("\nNo path found from robot's initial position to any of the goals.")
 
 
-
-
-
-# # def robotInfo():
-# #     with open(filename) as f:
-# #         for line in f:
-# #             content = line.strip()
-# #             if content.startswith("(") and content.endswith(")"):
-# #                 coordinates_str = content[1:-1]  # Remove the square brackets
-# #                 coordinates = [int(coord) for coord in coordinates_str.split(",")]
-# #                 print(coordinates)
-# #                 if len(coordinates) == 2:
-# #                     robot_x, robot_y = coordinates
-# #                     print ("robot y:", robot_y)
-# #                     print ("robot x:", robot_x)
-# #                     break  # Assuming you want the first pair and exit
-
-
-# with open(filename) as f:
-#     for line in f:
-#         content = line.strip()
-#         # Assuming the line contains a single pair of coordinates like "[5,11]"
-#         if content.startswith("[") and content.endswith("]"):
-#             coordinates_str = content[1:-1]  # Remove the square brackets
-#             coordinates = [int(coord) for coord in coordinates_str.split(",")]
-#             if len(coordinates) == 2:
-#                 widthOfMaze, lengthOfMaze = coordinates
-#                 break  # Assuming you want the first pair and exit
-#             break
-#         #it will the robot cords
-        
-#         elif content.startswith("(") and content.endswith(")"):
-#                 print ("passing through")
-#                 coordinates_str = content[1:-1]  # Remove the square brackets
-#                 coordinates = [int(coord) for coord in coordinates_str.split(",")]
-#                 print(coordinates)
-#                 if len(coordinates) == 2:
-#                     robot_x, robot_y = coordinates
-#                     print ("robot y:", robot_y)
-#                     print ("robot x:", robot_x)
-#                     break  # Assuming you want the first pair and exit
-
-            
-# # You can now use widthOfMaze and lengthOfMaze variables
-# print("Width of Maze:", widthOfMaze)
-# print("Length of Maze:", lengthOfMaze)
-# # print ("robot y:", robot_y)
-# # print ("robot x:", robot_x)
-
-
-#Tuesday 26th
-# import sys
-
-# filename = sys.argv[1]
-
-# widthOfMaze = None
-# lengthOfMaze = None
-# robotPosition = None
-# goalPositions = []
-# obstaclePositions = []
-
-# with open(filename) as f:
-#     for line in f:
-#         content = line.strip()
-#         if content.startswith("[") and content.endswith("]"):
-#             # Extract maze dimensions [5,11]
-#             dimensions_str = content[1:-1]
-#             widthOfMaze, lengthOfMaze = map(int, dimensions_str.split(","))
-
-#         elif content.startswith("(") and content.endswith(")"):
-#             # Extract robot position
-#             if robotPosition is None:
-#                 robotPosition = tuple(map(int, content[1:-1].split(",")))
-#             else:
-#                 # Extract goal position
-#                 goalPositions.extend(tuple(map(int, x.strip()[1:-1].split(","))) for x in content.split("|"))
-
-#                 # After reading a line for goal positions, now read for obstacle positions
-#                 for next_line in f:
-#                     next_content = next_line.strip()
-#                     if "," in next_content:
-#                         # Strip parentheses before splitting
-#                         obstaclePositions.append(tuple(map(int, next_content.strip("()").split(","))))
-#                     else:
-#                         # Stop reading obstacle positions if a new section starts
-#                         break
-
-# print("Dimensions of the Maze:", widthOfMaze, "x", lengthOfMaze)
-# print("Robot's Initial Position:", robotPosition)
-# print("Goal Positions:")
-# for goal in goalPositions:
-#     print(goal)
-# print("Obstacle Positions:")
-# for obstacle in obstaclePositions:
-#     print(obstacle)
+if __name__ == "__main__":
+    main()
