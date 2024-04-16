@@ -1,6 +1,10 @@
 import sys
 from collections import deque
 from bfs_robot_path import bfs as solve_path
+from dfs_robot_path import dfs as solve_path
+from A_Star_robot_path import astar as solve_path
+from GBFS_robot_path import greedy_best_first as solve_path
+
 
 def read_maze(filename):
     """
