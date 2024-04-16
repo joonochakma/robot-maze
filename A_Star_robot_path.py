@@ -1,15 +1,13 @@
 import sys
-import heapq #allows the heap data structure to be used
+import heapq #Allows the heap data structure to be used
 
-def heuristic(current, goal):
-    """
-    Calculate the Manhattan distance heuristic between current position and goal.
-    """
+def heuristic(current, goal): #Calculate the Manhattan distance heuristic between current position and goal.
+   
     x1, y1 = current
     x2, y2 = goal
     return abs(x1 - x2) + abs(y1 - y2)
 
-def astar(maze, start, goals):
+def solve_path(maze, start, goals):
     """
     Perform A* Search to find a path from start to any of the goals.
     """

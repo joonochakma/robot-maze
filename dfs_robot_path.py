@@ -1,6 +1,6 @@
 import sys
 
-def dfs(maze, start, goals):
+def solve_path(maze, start, goals):
     """
     Perform Depth-First Search to find a path from start to any of the goals.
     """

@@ -6,7 +6,7 @@ from collections import deque
 # uses queue that utilise fifo
 
 
-def bfs(maze, start, goals):
+def solve_path(maze, start, goals):
     """
     Perform Breadth-First Search to find a path from start to any of the goals.
     """

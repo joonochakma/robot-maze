@@ -9,7 +9,7 @@ def heuristic(current, goal):
     x2, y2 = goal
     return abs(x1 - x2) + abs(y1 - y2)
 
-def greedy_best_first(maze, start, goals):
+def solve_path(maze, start, goals):
     """
     Perform Greedy Best-First Search to find a path from start to any of the goals.
     """
