@@ -49,7 +49,7 @@ def main():
             elif maze[y][x] == "g":
                 goal_positions.append((x, y))
 
-    path = dfs(maze, robot_pos, goal_positions)
+    path = solve_path(maze, robot_pos, goal_positions)
 
     if path is not None:
         print("\nPath Found:")
