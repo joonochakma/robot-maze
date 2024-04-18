@@ -70,28 +70,30 @@ def main():
     solve_path = solve_path_module.solve_path
 
     maze, initial_pos, goals, _ = read_maze(maze_file)
+    
+    # print("Maze Representation:")
+    # for row in maze:
+    #     print(" ".join(cell for cell in row))
 
-    print("Maze Representation:")
-    for row in maze:
-        print(" ".join(cell for cell in row))
+    # print("\nRobot's Initial Position:", initial_pos)
+    # print("Goal Positions:")
+    # for goal in goals:
+    #     print(goal)
+    print("\n")
+    print(sys.argv[1] + ' ' + sys.argv[2])
 
-    print("\nRobot's Initial Position:", initial_pos)
-    print("Goal Positions:")
-    for goal in goals:
-        print(goal)
-
-    print("\nRunning algorithm...")
+    
     path = solve_path(maze, initial_pos, goals)
 
     if path is not None:
-        print("\nPath Found:")
-        print(" -> ".join(path))
+        # print("\nPath Found:")
+        print( "['" + "' , '".join(path) + "']")
     else:
-        print("\nNo path found from robot's initial position to any of the goals.")
+        print("\nNo goal is reachable." )
 
-    print("\nExecuting algorithm script to display moves...")
-    # Execute the algorithm script
-    exec(open(algorithm_file).read())
+    # print("\nExecuting algorithm script to display moves...")
+    # # Execute the algorithm script
+    # exec(open(algorithm_file).read())
 
 
 if __name__ == "__main__":
