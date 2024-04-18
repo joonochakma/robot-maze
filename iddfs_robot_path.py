@@ -53,7 +53,7 @@ if __name__ == "__main__":
             elif maze[y][x] == "g":
                 goal_positions.append((x, y))
 
-    path = iddfs(maze, robot_pos, goal_positions)
+    path = solve_path(maze, robot_pos, goal_positions)
 
     if path is not None:
         print("\nPath Found:")
