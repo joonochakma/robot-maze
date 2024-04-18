@@ -27,7 +27,7 @@ def solve_path(maze, start, goals):
 
         x, y = current
         if current in goals:
-            print("Total Visited Nodes:", visited_count)
+            print(f"<Node{current}> {visited_count}")
             return path
 
         # Check possible moves: up, down, left, right
@@ -37,7 +37,7 @@ def solve_path(maze, start, goals):
                 new_pos = (new_x, new_y)
                 heapq.heappush(heap, (heuristic(new_pos, goals[0]), new_pos, path + [direction]))
 
-    print("Total Visited Nodes:", visited_count)
+    print("No goal is reachable;", visited_count)
     return None
 
 

@@ -89,7 +89,7 @@ def main():
         # print("\nPath Found:")
         print( "['" + "' , '".join(path) + "']")
     else:
-        print("\nNo goal is reachable." )
+        print("")
 
     # print("\nExecuting algorithm script to display moves...")
     # # Execute the algorithm script

@@ -25,7 +25,7 @@ def solve_path(maze, start, goals):
 
         x, y = current
         if current in goals:
-            print("<Node", current, ">", visited_count)
+            print(f"<Node{current}> {visited_count}")
             return path
 
         # Check possible moves: up, down, left, right
@@ -34,7 +34,7 @@ def solve_path(maze, start, goals):
             if 0 <= new_x < len(maze[0]) and 0 <= new_y < len(maze) and maze[new_y][new_x] != "1": #checks other moves before moving
                 queue.append(((new_x, new_y), path + [direction]))
 
-    print("Total Visited Nodes:", visited_count)
+    print("No goal is reachable;", visited_count)
     return None
 
 def main():
