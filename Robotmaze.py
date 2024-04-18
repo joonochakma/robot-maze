@@ -79,8 +79,8 @@ def main():
     # print("Goal Positions:")
     # for goal in goals:
     #     print(goal)
-    print("\n")
-    print(sys.argv[1] + ' ' + sys.argv[2])
+    
+    print('.' + "\\" + sys.argv[1] + ' ' + sys.argv[2])
 
     
     path = solve_path(maze, initial_pos, goals)
