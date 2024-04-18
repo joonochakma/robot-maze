@@ -25,7 +25,8 @@ def solve_path(maze, start, goals):
 
         x, y = current
         if current in goals:
-            print("Total Visited Nodes:", visited_count)
+            print("\n--------------------------------------------------------------------------")
+            print(" Total Visited Nodes:", visited_count)
             return path
 
         # Check possible moves: up, down, left, right

@@ -94,7 +94,7 @@ def main():
             goals.remove(current_goal)
         else:
             print("\nNo path found from robot's current position to the current goal.")
-
+    print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
     print("\nNo more goals to reach.")
 
     print("\nExecuting algorithm script to display moves...")
