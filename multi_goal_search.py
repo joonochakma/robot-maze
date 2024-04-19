@@ -52,13 +52,14 @@ def read_maze(filename):
 
 def main():
     if len(sys.argv) != 3:
-        print("Usage: python robot_path.py <maze_file> <algorithm_file>")
+        print("Usage: python multi_goal.py <maze_file> <algorithm>")
         sys.exit(1)
         
     maze_file = sys.argv[1]
-    algorithm_file = sys.argv[2]
+    algorithm_name = sys.argv[2]
 
     # Dynamically import solve_path function from the provided algorithm file
+    algorithm_file = algorithm_name + "_robot_path.py"
     spec = importlib.util.spec_from_file_location("solve_path_module", algorithm_file)
     solve_path_module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(solve_path_module)
