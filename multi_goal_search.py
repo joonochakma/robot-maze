@@ -25,12 +25,13 @@ def read_maze(filename):
                     initial_pos = tuple(map(int, content[1:-1].split(",")))
                     x, y = initial_pos
                     maze[y][x] = "R"  # Mark robot's initial position as "R"
+                    goals.append(initial_pos)  # Add initial position to the list of goals
                 else:
                     # Extract goal position
                     goals.extend(tuple(map(int, x.strip()[1:-1].split(","))) for x in content.split("|"))
                     for goal in goals:
                         x, y = goal
-                        maze[y][x] = "g"  # Mark goal positions as "g"
+                        maze[y][x] = "G"  # Mark goal positions as "G"
 
                     # now read for obstacle positions
                     for next_line in f:
@@ -49,6 +50,44 @@ def read_maze(filename):
 
         return maze, initial_pos, goals, obstacles
 
+
+
+def calculate_distance(point1, point2):
+    """
+    Calculate the Manhattan distance between two points.
+    """
+    return abs(point1[0] - point2[0]) + abs(point1[1] - point2[1])
+
+
+def nearest_neighbor_tsp(graph, start_node):
+    """
+    Using the Nearest Neighbor method.
+    """
+    # Initialize a list to store the path
+    path = []
+
+    # Create a set to keep track of visited nodes
+    visited = set()
+
+    # Start from the specified start node
+    current_node = start_node
+    path.append(current_node)
+    visited.add(current_node)
+
+    # Repeat until all nodes are visited
+    while len(visited) < len(graph):
+        # Find the nearest unvisited neighbor
+        nearest_neighbor = min((neighbor for neighbor in graph if neighbor not in visited),
+                               key=lambda neighbor: graph[current_node][neighbor])
+        # Move to the nearest neighbor
+        current_node = nearest_neighbor
+        path.append(current_node)
+        visited.add(current_node)
+
+    # Complete the cycle by returning to the start node
+    path.append(start_node)
+
+    return path
 
 def main():
     if len(sys.argv) != 3:
@@ -72,17 +111,37 @@ def main():
     maze, initial_pos, goals, _ = read_maze(maze_file)
     print('.' + "\\" + sys.argv[1] + ' ' + sys.argv[2])
 
-    while goals:
-        current_goal = goals[0]
-        path = solve_path(maze, initial_pos, [current_goal])
+    print("Maze Representation:")
+    for row in maze:
+        print(" ".join(cell for cell in row))
+    print("\n")
 
+    # Create a distance matrix representing the distances between goals
+    graph = {}
+    for i, goal1 in enumerate(goals):
+        graph[i] = {}
+        for j, goal2 in enumerate(goals):
+            if i != j:
+                distance = calculate_distance(goal1, goal2)
+                graph[i][j] = distance
+
+    # Find the nearest neighbor path starting from the robot's initial position
+    start_node = goals.index(initial_pos)
+    nearest_neighbor_path_indices = nearest_neighbor_tsp(graph, start_node)
+
+    # Start from the robot's initial position
+    current_pos = initial_pos
+
+    for node_index in nearest_neighbor_path_indices:
+        goal = goals[node_index]
+        # Find the path from the current position to the current goal
+        path = solve_path(maze, current_pos, [goal])
         if path is not None:
+            
             print( "['" + "' , '".join(path) + "']")
-            print("\n")
-            # Update robot's position to the goal position
-            initial_pos = current_goal
-            # Remove the goal from the list of goals
-            goals.remove(current_goal)
+            
+            # Update the current position to the current goal
+            current_pos = goal
         else:
             print("\nNo path found from robot's current position to the current goal.")
 
@@ -91,15 +150,16 @@ def main():
     exec(open(algorithm_file).read())
 
 
-
-
-
-    path = solve_path(maze, initial_pos, goals)
-
-        
-    
-
-    
-
 if __name__ == "__main__":
     main()
+
+
+
+#  if path is not None:
+#             # Convert the path coordinates into directions
+#             directions = convert_to_directions(path)
+#             # Print the path taken
+#             print("Path taken:")
+#             print( "['" + "' , '".join(path) + "']")
+#             print("\n")
+#             # Update robot's position to the goal position
