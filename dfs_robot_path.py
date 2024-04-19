@@ -33,7 +33,6 @@ def solve_path(maze, start, goals):
 
 def main():
     if len(sys.argv) != 2:
-        print("Usage: python dfs_algorithm.py <maze_file>")
         sys.exit(1)
 
     maze_file = sys.argv[1]
@@ -50,13 +49,6 @@ def main():
                 goal_positions.append((x, y))
 
     path = solve_path(maze, robot_pos, goal_positions)
-
-    if path is not None:
-        print("\nPath Found:")
-        print(" -> ".join(path))
-    else:
-        print("\nNo path found from robot's initial position to any of the goals.")
-
 
 if __name__ == "__main__":
     main()
