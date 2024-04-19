@@ -71,37 +71,36 @@ def main():
     solve_path = solve_path_module.solve_path
 
     maze, initial_pos, goals, _ = read_maze(maze_file)
+    print('.' + "\\" + sys.argv[1] + ' ' + sys.argv[2])
 
-    print("Maze Representation:")
-    for row in maze:
-        print(" ".join(cell for cell in row))
-
-    print("\nRobot's Initial Position:", initial_pos)
-    print("Goal Positions:")
-    for goal in goals:
-        print(goal)
-
-    print("\nRunning algorithm...")
     while goals:
         current_goal = goals[0]
         path = solve_path(maze, initial_pos, [current_goal])
 
         if path is not None:
-            print("\nPath Found to Goal:", current_goal)
-            print(" -> ".join(path))
+            print( "['" + "' , '".join(path) + "']")
+            print("\n")
             # Update robot's position to the goal position
             initial_pos = current_goal
             # Remove the goal from the list of goals
             goals.remove(current_goal)
         else:
             print("\nNo path found from robot's current position to the current goal.")
-    print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-    print("\nNo more goals to reach.")
 
-    print("\nExecuting algorithm script to display moves...")
+    print("\nNo more goals to reach.")
     # Execute the algorithm script
     exec(open(algorithm_file).read())
 
+
+
+
+
+    path = solve_path(maze, initial_pos, goals)
+
+        
+    
+
+    
 
 if __name__ == "__main__":
     main()
