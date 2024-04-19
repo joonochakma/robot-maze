@@ -52,7 +52,6 @@ def read_maze(filename):
 
 def main():
     if len(sys.argv) != 3:
-        print("Usage: python multi_goal.py <maze_file> <algorithm>")
         sys.exit(1)
         
     maze_file = sys.argv[1]
