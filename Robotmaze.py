@@ -49,16 +49,20 @@ def read_maze(filename):
 
         return maze, initial_pos, goals, obstacles
 
+import sys
+import importlib.util
+
 
 def main():
     if len(sys.argv) != 3:
-        print("Usage: python robot_path.py <maze_file> <algorithm_file>")
+        print("Usage: python robot_path.py <maze_file> <algorithm>")
         sys.exit(1)
         
     maze_file = sys.argv[1]
-    algorithm_file = sys.argv[2]
+    algorithm_name = sys.argv[2]
 
     # Dynamically import solve_path function from the provided algorithm file
+    algorithm_file = algorithm_name + "_robot_path.py"
     spec = importlib.util.spec_from_file_location("solve_path_module", algorithm_file)
     solve_path_module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(solve_path_module)
@@ -70,31 +74,17 @@ def main():
     solve_path = solve_path_module.solve_path
 
     maze, initial_pos, goals, _ = read_maze(maze_file)
-    
-    # print("Maze Representation:")
-    # for row in maze:
-    #     print(" ".join(cell for cell in row))
-
-    # print("\nRobot's Initial Position:", initial_pos)
-    # print("Goal Positions:")
-    # for goal in goals:
-    #     print(goal)
-    
     print('.' + "\\" + sys.argv[1] + ' ' + sys.argv[2])
 
-    
     path = solve_path(maze, initial_pos, goals)
 
+        
+    
+
     if path is not None:
-        # print("\nPath Found:")
         print( "['" + "' , '".join(path) + "']")
     else:
         print("")
-
-    # print("\nExecuting algorithm script to display moves...")
-    # # Execute the algorithm script
-    # exec(open(algorithm_file).read())
-
 
 if __name__ == "__main__":
     main()
