@@ -68,9 +68,58 @@ the cost to reach this node to evaluate the node.
   - Your search strategy 2 An informed method to find a shortest path (with least moves) to reach the goal.
 
 
- Maze in unreachable form: ![Alt](unreachable_goal_image.png)
+# Multigoal Extension
 
-Maze in multi goal form: ![Alt](multiple_goals_image.png)
+For bonus research task, the Robot maze can reach multiple goals in a shortest path. This task relates to the [Travelling Salesman Problem TSP](https://www.youtube.com/watch?v=1pmBjIZ20pE&pp=ygUadHJhdmVsaW5nIHNhbGVzbWFuIHByb2JsZW0%3D).
+
+
+![Maze in multi goal form:](multiple_goals_image.png)
+
+
+# Unreachable Goal
+
+When creating the program, it is must to test the searches when there is no goal or unreachable goal  in the maze.  [Unreachable_goal.txt](https://github.com/joonochakma/robot-maze/blob/main/unreachable_goal.txt) is used to test the limit of the searches and return the number of nodes that have been scanned. 
+
+ **NOTE:** CUS1 search is still in progress with unreachable goal test
+
+  
+ ![Maze in unreachable form:](unreachable_goal_image.png)
+
+
+# Command line Operation
+
+
+
+
+
+### Running the main file
+``` 
+C:\Assignments> python Robotmaze.py <text file> <method>  )
+```
+
+### Running the multi-goal function 
+``` 
+C:\Assignments> python multi_goal_search.py multi_goal-test.txt BFS  )
+```
+
+### Methods
+
+**BFS** - Breadtht First Search
+**DFS** - Depth First Search
+**GBFS** - Greedy Best First Search
+**AS** - A* Search
+**CUS1** - Iterative Deepening Depth-First Search
+**CUS2** - Beam Search
+
+### Maze configuration 
+To execute normal maze
+`RobotNav-test.txt` 
+
+To execute multi-goal function
+`multi_goal-test.txt` 
+
+To execute unreachable goal maze
+`unreachable_goal.txt`
 
 
 
