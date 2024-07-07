@@ -1,5 +1,5 @@
 
-# Robot Maze Navigation
+# Robot Maze Navigation 
 
 ## Introduction 
 This project was implement a tree based search algorithm from scratch and create different heuristic search (informed and uninformed types).
